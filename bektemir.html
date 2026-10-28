@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Проблемы нашего района — Бектемир</title>
+<style>
+:root{--bg:#050f2e;--bg2:#0a1c4d;--card:#0e2766;--line:#2a4a9c;--text:#eaf1ff;--mute:#9db4e6;--acc:#4da3ff;--acc2:#8fd0ff;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(circle at 20% 0,#12338a 0,var(--bg) 55%) fixed;color:var(--text);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+section,header,footer{max-width:960px;margin:0 auto;padding:44px 20px}
+h1{font-size:clamp(32px,7vw,56px);line-height:1.1;margin:.2em 0}
+h2{font-size:clamp(24px,5vw,34px);margin:0 0 .5em}
+.tag{display:inline-block;padding:4px 14px;border:1px solid var(--line);border-radius:99px;color:var(--acc2);font-size:14px;letter-spacing:.05em}
+.lead{color:var(--mute);max-width:640px}
+.btn{display:inline-block;margin-top:14px;padding:12px 24px;border-radius:12px;background:var(--acc);color:#04123a;font-weight:700;text-decoration:none;border:0;font-size:16px;cursor:pointer}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.tab{flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:15px;cursor:pointer}
+.tab.on{background:var(--acc);color:#04123a;border-color:var(--acc);font-weight:700}
+.tab svg,.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.panel{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.panel h3{margin:0 0 8px;font-size:24px}
+.facts{list-style:none;padding:0;margin:14px 0}
+.facts li{padding:10px 14px;margin:8px 0;border-left:3px solid var(--acc);background:#0a1f5a;border-radius:0 10px 10px 0}
+.sol{color:var(--acc2)}
+.opts{display:grid;gap:10px}
+.opt{position:relative;overflow:hidden;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--text);font-size:16px;cursor:pointer}
+.opt .bar{position:absolute;inset:0 auto 0 0;background:#1f4fc4;opacity:.55;width:0;transition:width .6s}
+.opt span{position:relative;display:flex;justify-content:space-between;gap:10px}
+.treebox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center}
+.treebox svg{width:100%;max-width:340px;height:260px}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:14px;margin:8px 0;border:1px solid var(--line);border-radius:12px;background:var(--bg2);cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--acc);flex:none;margin-top:3px}
+.prog{height:12px;border-radius:99px;background:var(--bg2);overflow:hidden;margin:14px 0 6px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .4s}
+footer{text-align:center;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <span class="tag">ПРОЕКТНАЯ РАБОТА · БЕКТЕМИРСКИЙ РАЙОН</span>
+  <h1>Актуальные проблемы<br>нашего района</h1>
+  <p class="lead">Мы изучили, с чем сталкиваются жители Бектемира каждый день: вода, свет, отношение к животным, мусор и нехватка деревьев. Выбери тему и узнай подробнее.</p>
+  <a class="btn" href="#problems">Смотреть проблемы</a>
+</header>
+
+<section id="problems">
+  <h2>Пять проблем района</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="panel" id="panel"></div>
+</section>
+
+<section>
+  <h2>Голосование</h2>
+  <p class="lead">Какую проблему, по-твоему, нужно решать в первую очередь?</p>
+  <div class="opts" id="poll"></div>
+  <p id="pollNote" style="color:var(--mute);font-size:14px"></p>
+</section>
+
+<section>
+  <h2>Почему так мало зелени?</h2>
+  <p class="lead">Саженцы в нашем районе сажают, но дерево растёт долго. Подвигай ползунок и посмотри, сколько лет нужно, чтобы саженец стал деревом, и что ему нужно всё это время: полив, побелка, защита.</p>
+  <div class="treebox">
+    <svg viewBox="0 0 200 200" aria-label="Рост дерева">
+      <rect x="0" y="170" width="200" height="30" fill="#14357f"/>
+      <g id="tree" style="transform-origin:100px 170px;transition:transform .3s">
+        <rect x="94" y="110" width="12" height="60" rx="3" fill="#7a5a3a"/>
+        <circle cx="100" cy="90" r="44" fill="#3c9d6a"/>
+        <circle cx="76" cy="108" r="26" fill="#2f8a5a"/>
+        <circle cx="126" cy="106" r="28" fill="#4bb07a"/>
+      </g>
+    </svg>
+    <div><b id="yr">1 год</b> — <span id="yrTxt"></span></div>
+    <input type="range" id="age" min="1" max="15" value="1" aria-label="Возраст дерева">
+  </div>
+</section>
+
+<section>
+  <h2>Что можем сделать мы</h2>
+  <p class="lead">Отмечай пункты, которые готов выполнять.</p>
+  <div id="todo"></div>
+  <div class="prog"><i id="bar"></i></div>
+  <div id="progTxt" style="color:var(--mute);font-size:14px"></div>
+</section>
+
+<footer>Проектная работа «Проблемы нашего района» · Бектемирский район<br>Авторы проекта: Исмаилова Зебо, Асадова Муслима, Сергеева София</footer>
+
+<script>
+const P=[
+{k:"water",n:"Вода",ic:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+ t:"Отключения холодной и горячей воды",
+ d:"Недавно в районе на целый день отключали и холодную, и горячую воду. В этом году было несколько аварий.",
+ f:["Вода пропадала сразу вся: и холодная, и горячая","За год случилось несколько аварий","Без воды неудобно всем: нельзя готовить, мыться, стирать"],
+ s:"Что можно сделать: заранее предупреждать жителей об отключениях и быстрее устранять аварии."},
+{k:"light",n:"Свет",ic:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+ t:"Перебои с электричеством",
+ d:"Многоквартирные дома страдают меньше, а вот в коттеджах свет бывает не всегда. Летом его отключали постоянно.",
+ f:["Летом отключения были постоянными","В коттеджах ситуация хуже, чем в многоэтажках","Без света не работают холодильники, насосы и техника"],
+ s:"Что можно сделать: обновлять сети и обращаться в службу электроснабжения при каждом отключении."},
+{k:"animals",n:"Животные",ic:'<circle cx="6" cy="9" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="18" cy="9" r="2"/><path d="M7 17c0-3 2-5 5-5s5 2 5 5c0 2-2 3-5 3s-5-1-5-3z"/>',
+ t:"Грубое отношение к животным",
+ d:"Иногда дети во время игр пинают животных и пугают их. Чаще всего это делают школьники начальных классов.",
+ f:["Животных пинают и запугивают","Многие дети не понимают, что животному больно","Нужна работа в школах и семьях"],
+ s:"Что можно сделать: проводить классные часы о доброте к животным и показывать личный пример."},
+{k:"trash",n:"Мусор",ic:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+ t:"Мусор повсюду",
+ d:"Во многих местах района на улицах и во дворах лежит мусор. Это портит вид и вредит окружающей среде.",
+ f:["Мусор виден во дворах и на улицах","Не хватает привычки выбрасывать его в урны","Грязь влияет на здоровье и на животных"],
+ s:"Что можно сделать: устраивать субботники, ставить больше урн и учиться раздельному сбору."},
+{k:"trees",n:"Деревья",ic:'<path d="M12 22v-7M12 15a5 5 0 1 0-1-9.9A4 4 0 1 0 8 13a5 5 0 0 0 4 2z"/>',
+ t:"Слишком мало деревьев",
+ d:"Саженцы сажают, но они растут очень долго, а пока деревьев в районе неимоверно мало. За ними почти никто не ухаживает: иногда поливают, но даже побелки нет.",
+ f:["Саженцы вырастают в деревья не один год","Уход нерегулярный, побелки нет","Без тени летом в районе жарко"],
+ s:"Что можно сделать: закреплять саженцы за классами и семьями, поливать и белить стволы."}
+];
+const $=id=>document.getElementById(id);
+let cur=0;
+function show(i){cur=i;
+ document.querySelectorAll(".tab").forEach((b,j)=>b.classList.toggle("on",j===i));
+ const p=P[i];
+ $("panel").innerHTML=`<h3>${p.t}</h3><p>${p.d}</p><ul class="facts">${p.f.map(x=>`<li>${x}</li>`).join("")}</ul><p class="sol">${p.s}</p>`;
+}
+$("tabs").innerHTML=P.map((p,i)=>`<button class="tab" onclick="show(${i})"><svg viewBox="0 0 24 24">${p.ic}</svg>${p.n}</button>`).join("");
+show(0);
+
+// Голосование
+let votes={};P.forEach(p=>votes[p.k]=0);let voted=null;
+try{const s=JSON.parse(localStorage.getItem("bk_votes")||"null");if(s)votes=Object.assign(votes,s);voted=localStorage.getItem("bk_voted")}catch(e){}
+function drawPoll(){
+ const tot=Object.values(votes).reduce((a,b)=>a+b,0)||1;
+ $("poll").innerHTML=P.map(p=>{const pc=Math.round(votes[p.k]/tot*100);
+  return `<button class="opt" onclick="vote('${p.k}')"><div class="bar" style="width:${voted?pc:0}%"></div><span><b>${p.n}</b><em>${voted?pc+"%":""}</em></span></button>`}).join("");
+ $("pollNote").textContent=voted?"Спасибо за голос! Результаты показаны на этом устройстве.":"Нажми на вариант, чтобы проголосовать.";
+}
+function vote(k){if(voted)return;voted=k;votes[k]++;
+ try{localStorage.setItem("bk_votes",JSON.stringify(votes));localStorage.setItem("bk_voted",k)}catch(e){}
+ drawPoll()}
+drawPoll();
+
+// Дерево
+const stages=["Крошечный саженец: ему нужен ежедневный полив.","Тонкий стволик: легко сломать, нужна защита.","Начинает крепнуть, но тени пока нет.","Нужна побелка ствола от солнца и вредителей.","Появляются первые ветки, но кроны почти нет.","Дерево уже заметно, но ещё молодое.","Корни окрепли, тень становится ощутимой.","Хорошая крона, дерево даёт прохладу.","Взрослое дерево: уход нужен реже.","Взрослое дерево: тень и чистый воздух для района."];
+$("age").oninput=e=>{const a=+e.target.value;
+ $("yr").textContent=a+(a===1?" год":a<5?" года":" лет");
+ $("tree").style.transform=`scale(${0.18+a/15*0.82})`;
+ $("yrTxt").textContent=stages[Math.min(9,Math.floor((a-1)/1.5))]};
+$("age").oninput({target:$("age")});
+
+// Чек-лист
+const T=["Не обижать животных и объяснять младшим, что им тоже больно","Выбрасывать мусор только в урны и не оставлять его во дворе","Принять участие в субботнике","Поливать саженец рядом с домом","Сообщать в службы об авариях воды и света","Рассказать о проекте друзьям и семье"];
+$("todo").innerHTML=T.map((t,i)=>`<label class="chk"><input type="checkbox" onchange="upd()">${t}</label>`).join("");
+function upd(){const c=document.querySelectorAll(".chk input"),n=[...c].filter(x=>x.checked).length;
+ $("bar").style.width=n/c.length*100+"%";
+ $("progTxt").textContent=n===c.length?"Отлично! Ты настоящий помощник района.":`Выбрано ${n} из ${c.length}`}
+upd();
+</script>
+</body>
+</html>
